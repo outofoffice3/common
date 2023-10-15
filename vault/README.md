@@ -20,6 +20,16 @@ go get github.com/outofoffice3/vault
 ### Usage
 To use the vault package, you will need to have the AWS SDK for Go installed and properly configured with your AWS credentials. You can do this by setting up the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables or by using other AWS SDK configuration methods.
 
+The Vault integrates with AWS Secrets Manager for the following methods : 
+- `GetSecret(secretName string)(interface{}, error)`
+- `PutSecret(secretName string, secretValue interface{}) error`
+- `DeleteSecrete(secretName string) error `
+
+The Vault uses its local store when using methods with "local" in the name 
+- `GetLocalSecret(secretName string)(interface{}, error)`
+- `PutLocalSecret(secretName string, secretValue interface{}) error`
+- `DeleteLocalSecrete(secretName string) error `
+
 Import the go package into your code : 
 
 ``` go 
