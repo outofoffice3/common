@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"path"
 	"runtime"
 	"sync"
 )
@@ -60,9 +61,10 @@ func (l *ConsoleLogger) log(level LogLevel, format string, args ...interface{}) 
 	function := runtime.FuncForPC(pc)
 	if function != nil {
 		file, _ := function.FileLine(pc)
-		funcName := function.Name()
+		funcName := path.Base(file)
+		method := function.Name()
 
-		message := fmt.Sprintf("[%s] %s (%s): %s", LogLevelToString(level), funcName, file, fmt.Sprintf(format, args...))
+		message := fmt.Sprintf("[%s](%s)[%s] : %s", LogLevelToString(level), funcName, method, fmt.Sprintf(format, args...))
 		log.Println(message)
 	} else {
 		message := fmt.Sprintf("[%s]: %s", LogLevelToString(level), fmt.Sprintf(format, args...))
@@ -74,15 +76,15 @@ func (l *ConsoleLogger) log(level LogLevel, format string, args ...interface{}) 
 func LogLevelToString(level LogLevel) string {
 	switch level {
 	case LogLevelDebug:
-		return "Debug"
+		return "DEBUG"
 	case LogLevelInfo:
-		return "Info"
+		return "INFO"
 	case LogLevelWarning:
-		return "Warning"
+		return "WARNING"
 	case LogLevelError:
-		return "Error"
+		return "ERROR"
 	default:
-		return "Unknown"
+		return "UNKNOWN"
 	}
 }
 
