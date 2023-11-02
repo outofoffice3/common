@@ -62,7 +62,7 @@ func (l *ConsoleLogger) log(level LogLevel, format string, args ...interface{}) 
 	if function != nil {
 		file, _ := function.FileLine(pc)
 		funcName := path.Base(file)
-		method := function.Name()
+		method := path.Base(function.Name())
 
 		message := fmt.Sprintf("[%s](%s)[%s] : %s", LogLevelToString(level), funcName, method, fmt.Sprintf(format, args...))
 		log.Println(message)
